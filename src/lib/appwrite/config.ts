@@ -13,7 +13,8 @@ export const appwriteConfig = {
 export const client = new Client();
 
 client.setEndpoint('https://cloud.appwrite.io/v1');
-client.setProject('65453c3f3e2673488716');
+// client.setProject('65453c3f3e2673488716');
+client.setProject(appwriteConfig.projectId);
 
 console.log(client)
 

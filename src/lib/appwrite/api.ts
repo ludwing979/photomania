@@ -63,19 +63,23 @@ export async function signInAccount(user: { email: string; password: string }) {
 
 export async function getCurrentUser() {
   try {
-    const currentAccount = await account.get();
+    const currentAccountId = localStorage.getItem("sessionId");
+    // const currentAccount = await account.get();
 
-    if (!currentAccount) throw Error;
+    // if (!currentAccount) throw Error;
 
-    const currentUser = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      [Query.equal("accountId", currentAccount.$id)]
-    );
+    if(currentAccountId !== null){
+      const currentUser = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        [Query.equal("accountId", currentAccountId)]
+        // [Query.equal("accountId", currentAccount.$id)]
+      );
 
-    if (!currentUser) throw Error;
+      if (!currentUser) throw Error;
 
-    return currentUser.documents[0];
+      return currentUser.documents[0];
+    }
   } catch (error) {
     console.log(error);
     return null;
